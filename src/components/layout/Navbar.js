@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 const Navbar = () => {
     return (
         <nav className="navbar bg-success">
@@ -9,7 +9,7 @@ const Navbar = () => {
             <ul>
                 <li>
                     <a href="#">Home</a>
-                    <a href="#">About</a>
+                    <a href="/about">About</a>
                 </li>
             </ul>
         </nav>
