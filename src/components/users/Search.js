@@ -15,6 +15,10 @@ const Search = () => {
         }
     };
 
+    const clearUsers = () => {
+        setUsers([]);
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
         if (text === "") {
@@ -33,6 +37,11 @@ const Search = () => {
                 </input>
                 <input type="submit" value={Search} className="btn btn-success btn-block"></input>
             </form>
+            {users.length > 0 && (
+                <button className="btn btn-danger btn-block" onClick={clearUsers}>
+                    Clear
+                </button>
+            )}
             <Users users={users} />
         </div>
     );
