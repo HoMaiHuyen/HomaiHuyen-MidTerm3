@@ -33,9 +33,8 @@ const Search = () => {
     return (
         <div>
             <form onSubmit={onSubmit} className="form">
-                <input type="text" name="text" placeholder="Search user" value={text} onChange={onChange}>
-                </input>
-                <input type="submit" value={Search} className="btn btn-success btn-block"></input>
+                <input type="text" name="text" placeholder="Search User" value={text} onChange={onChange} />
+                <input type="submit" value="Search" className="btn btn-success btn-block" />
             </form>
             {users.length > 0 && (
                 <button className="btn btn-danger btn-block" onClick={clearUsers}>
