@@ -1,12 +1,12 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
-// import Repos from "../repos/Repos";
+import Repos from "../repos/Repos";
 
 const User = () => {
     const { id } = useParams();
     const [user, setUser] = useState({});
-    // const [repos, setRepos] = useState({});
+    const [repos, setRepos] = useState([]); // Initialize as an empty array
 
     const getUser = async (username) => {
         try {
@@ -16,26 +16,28 @@ const User = () => {
             const data = response.data;
             setUser(data);
         } catch (error) {
-            console.error("Error fetching data:", error.message);
+            console.error("Error fetching user data:", error.message);
         }
     };
 
-    // const getUserRepos = async (id) => {
-    //     try {
-    //         const response = await axios.get(
-    //             `https://api.github.com/users/${id}`
-    //         );
-    //         const data = response.data;
-    //         setRepos(data);
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error.message);
-    //     }
-    // };
+    const getUserRepos = async (username) => {
+        try {
+            const response = await axios.get(
+                `https://api.github.com/users/${username}/repos`
+            );
+            const data = response.data;
+            console.log(data);
+            setRepos(Array.isArray(data) ? data : []); 
+        } catch (error) {
+            console.error("Error fetching repositories:", error.message);
+            setRepos([]);
+        }
+    };
 
     useEffect(() => {
         getUser(id);
-        // getUserRepos(id);
-    }, []);
+        getUserRepos(id);
+    }, [id]);
 
     const {
         name,
@@ -125,8 +127,9 @@ const User = () => {
                 <div className="badge badge-light">Repository: {public_repos}</div>
                 <div className="badge badge-dark">Gist: {public_gists}</div>
             </div>
-            {/* <Repos repos={repos} /> */}
+            <Repos repos={repos} />
         </Fragment>
     );
 };
+
 export default User;
