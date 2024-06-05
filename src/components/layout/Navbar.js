@@ -1,6 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-const Navbar = () => {
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const Navbar = ({ toggleTheme }) => {
     return (
         <nav className="navbar bg-success">
             <h1>
@@ -8,11 +9,17 @@ const Navbar = () => {
             </h1>
             <ul>
                 <li>
-                    <a href="#">Home</a>
-                    <a href="/about">About</a>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/about">About</Link>
+                </li>
+                <li>
+                    <button onClick={toggleTheme}>Toggle Theme</button>
                 </li>
             </ul>
         </nav>
     );
 };
+
 export default Navbar;
