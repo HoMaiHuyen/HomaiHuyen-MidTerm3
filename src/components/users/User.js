@@ -1,42 +1,33 @@
-import React, { Fragment, useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
-import Repos from "../repos/Repos";
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import Repos from '../repos/Repos';
+import { getUser, getUserRepos } from '../../api';
 
 const User = () => {
     const { id } = useParams();
     const [user, setUser] = useState({});
-    const [repos, setRepos] = useState([]); // Initialize as an empty array
-
-    const getUser = async (username) => {
-        try {
-            const response = await axios.get(
-                `https://api.github.com/users/${username}`
-            );
-            const data = response.data;
-            setUser(data);
-        } catch (error) {
-            console.error("Error fetching user data:", error.message);
-        }
-    };
-
-    const getUserRepos = async (username) => {
-        try {
-            const response = await axios.get(
-                `https://api.github.com/users/${username}/repos`
-            );
-            const data = response.data;
-            console.log(data);
-            setRepos(Array.isArray(data) ? data : []); 
-        } catch (error) {
-            console.error("Error fetching repositories:", error.message);
-            setRepos([]);
-        }
-    };
-
+    const [repos, setRepos] = useState([]);
     useEffect(() => {
-        getUser(id);
-        getUserRepos(id);
+        const fetchUser = async () => {
+            try {
+                const userData = await getUser(id);
+                setUser(userData);
+            } catch (error) {
+                console.error('Error fetching user data:', error.message);
+            }
+        };
+        fetchUser();
+    }, [id]);
+    useEffect(() => {
+        const fetchRepos = async () => {
+            try {
+                const reposData = await getUserRepos(id);
+                setRepos(reposData);
+            } catch (error) {
+                console.error('Error fetching repositories:', error.message);
+            }
+        };
+        fetchRepos();
     }, [id]);
 
     const {
@@ -127,6 +118,7 @@ const User = () => {
                 <div className="badge badge-light">Repository: {public_repos}</div>
                 <div className="badge badge-dark">Gist: {public_gists}</div>
             </div>
+            <h3>Repository</h3>
             <Repos repos={repos} />
         </Fragment>
     );
