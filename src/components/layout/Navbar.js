@@ -5,7 +5,7 @@ const Navbar = ({ toggleTheme }) => {
     return (
         <nav className="navbar bg-success">
             <h1>
-                <i className="fab fa-github">GitHub Finder</i>
+                GitHub Finder
             </h1>
             <ul>
                 <li>
@@ -14,8 +14,10 @@ const Navbar = ({ toggleTheme }) => {
                 <li>
                     <Link to="/about">About</Link>
                 </li>
-                <li>
-                    <button onClick={toggleTheme}>Toggle Theme</button>
+                <li className="nav-item">
+                    <button className="btn btn-link nav-link" onClick={toggleTheme} >
+                        <i className="fas fa-adjust fa-lg"></i>
+                    </button>
                 </li>
             </ul>
         </nav>

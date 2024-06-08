@@ -449,20 +449,43 @@ table th {
 }
 
 body.dark-theme {
+    background-color: #000;
+    color: #fff;
+}
+
+.dark-theme .navbar {
+    background-color: #4CAF50; 
+}
+
+.dark-theme .search-bar,
+.dark-theme .btn-search,
+.dark-theme .btn-clear {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.dark-theme .container {
+    background-color: #000;
+}
+
+.dark-theme .card {
     background-color: #333;
     color: #fff;
 }
 
-body.dark-theme .navbar {
-    background-color: #555;
+.btn-dark {
+    background-color: #333;
+    color: #fff;
+    border: none;
 }
 
-body.dark-theme .card {
-    background-color: #444;
-    color: #fff;
+.btn-light {
+    background-color: #f4f4f4;
+    color: #000;
+    border: none;
 }
 
-body.dark-theme .btn {
-    background-color: #666;
-    color: #fff;
+.dark-theme .btn-dark {
+    background-color: #fff;
+    color: #000
 }
