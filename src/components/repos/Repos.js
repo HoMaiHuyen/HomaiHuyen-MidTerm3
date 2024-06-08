@@ -13,9 +13,10 @@ const Repos = ({ repos }) => {
 };
 
 const repoStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridGap: "1rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    
 };
 
 Repos.propTypes = {

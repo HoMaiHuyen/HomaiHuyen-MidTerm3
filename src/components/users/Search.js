@@ -9,20 +9,22 @@ const useQuery = () => {
 
 const Search = () => {
     const history = useHistory();
+    const location = useLocation();
     const query = useQuery();
-    const [text, setText] = useState(query.get('q') || "");
-    const [users, setUsers] = useState([]);
+    const [text, setText] = useState(query.get('q') || location.state?.text || "");
+    const [users, setUsers] = useState(location.state?.users || []);
 
     useEffect(() => {
-        if (text) {
+        if (text && users.length === 0) {
             SearchUsers(text);
         }
     }, []);
 
-    const SearchUsers = async (text) => {
+    const SearchUsers = async (searchText) => {
         try {
-            const users = await searchUsers(text);
+            const users = await searchUsers(searchText);
             setUsers(users);
+            history.push(`/?q=${searchText}`, { users, text: searchText });
         } catch (error) {
             console.error("Error fetching users:", error);
         }
@@ -30,6 +32,8 @@ const Search = () => {
 
     const clearUsers = () => {
         setUsers([]);
+        setText("");
+        history.push(`/`);
     };
 
     const onSubmit = (e) => {
@@ -38,7 +42,6 @@ const Search = () => {
             alert("Please enter something");
         } else {
             SearchUsers(text);
-            history.push(`/?q=${text}`);
         }
     };
 
@@ -65,7 +68,7 @@ const Search = () => {
                     Clear
                 </button>
             )}
-            <Users users={users} />
+            <Users users={users} text={text} />
         </div>
     );
 };

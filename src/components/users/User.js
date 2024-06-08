@@ -1,12 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import Repos from '../repos/Repos';
 import { getUser, getUserRepos } from '../../api';
 
 const User = () => {
     const { id } = useParams();
+    const location = useLocation();
     const [user, setUser] = useState({});
     const [repos, setRepos] = useState([]);
+
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -18,6 +20,7 @@ const User = () => {
         };
         fetchUser();
     }, [id]);
+
     useEffect(() => {
         const fetchRepos = async () => {
             try {
@@ -33,7 +36,7 @@ const User = () => {
     const {
         name,
         avatar_url,
-        location,
+        location: userLocation,
         bio,
         company,
         blog,
@@ -48,7 +51,10 @@ const User = () => {
 
     return (
         <Fragment>
-            <Link to="/" className="btn btn-light">
+            <Link to={{
+                pathname: location.state?.from || '/',
+                state: { users: location.state?.users, text: location.state?.text }
+            }} className="btn btn-light">
                 Back to search
             </Link>
             Hireable: {hireable ? (
@@ -65,7 +71,7 @@ const User = () => {
                         style={{ width: "150px" }}
                     />
                     <h1>{name}</h1>
-                    <p>{location}</p>
+                    <p>{userLocation}</p>
                 </div>
                 <div>
                     {bio && (
